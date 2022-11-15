@@ -28,7 +28,7 @@
             var randInt = (left, right) => {
                 return Math.floor(Math.random() * (right - left)) + left;
             };
-            var operation = randInt(0, 5); // add, sub, mul, div, sqrt
+            var operation = randInt(0, 6); // add, sub, mul, div, sqrt, log
             var expected = 0;
             var question = document.getElementById("question");
 
@@ -61,11 +61,18 @@
                     expected = randInt(1000, 10000);
                     var sq = expected * expected;
                     question.textContent = `√${sq} = ?`;
+                    break;
+                case 5:
+                    expected = randInt(1000, 10000);
+                    var base = BigInt(randInt(2, 4));
+                    var antilog = base ** BigInt(expected);
+                    question.textContent = `log_${base}(${antilog}) = ?`;
+                    break;
             }
 
             var submit = document.getElementById("submit");
             submit.onclick = () => {
-                var ok = expected == parseInt(answer.textContent);
+                var ok = expected == answer.textContent;
                 var result = document.getElementById("result");
                 result.textContent = ok ? "correct!" : "incorrect...";
                 result.style = ok ? "background-color:lightgreen" : "background-color:red";
