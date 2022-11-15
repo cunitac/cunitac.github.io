@@ -28,38 +28,40 @@
             var randInt = (left, right) => {
                 return Math.floor(Math.random() * (right - left)) + left;
             };
-            var operation = randInt(0, 4); // add, sub, mul, div
-            var expected = 0, lhs = 0, rhs = 0, operator = "";
+            var operation = randInt(0, 5); // add, sub, mul, div, sqrt
+            var expected = 0;
+            var question = document.getElementById("question");
 
             switch (operation) {
                 case 0:
                     expected = randInt(1000, 10000);
-                    lhs = randInt(100, expected - 100);
-                    rhs = expected - lhs;
-                    operator = "+";
+                    var lhs = randInt(100, expected - 100);
+                    var rhs = expected - lhs;
+                    question.textContent = `${lhs} + ${rhs} = ?`;
                     break;
                 case 1:
                     expected = randInt(1000, 10000);
-                    rhs = randInt(100, 10000);
-                    lhs = expected + rhs;
-                    operator = "-"
+                    var rhs = randInt(100, 10000);
+                    var lhs = expected + rhs;
+                    question.textContent = `${lhs} - ${rhs} = ?`;
                     break;
                 case 2:
-                    lhs = randInt(100, 1000);
-                    rhs = randInt(Math.floor((1000 + lhs - 1) / lhs), Math.floor((10000 + lhs - 1) / lhs));
+                    var lhs = randInt(100, 1000);
+                    var rhs = randInt(Math.floor((1000 + lhs - 1) / lhs), Math.floor((10000 + lhs - 1) / lhs));
                     expected = lhs * rhs;
-                    operator = "×"
+                    question.textContent = `${lhs} × ${rhs} = ?`;
                     break;
                 case 3:
                     expected = randInt(1000, 10000);
-                    rhs = randInt(10, 100);
-                    lhs = rhs * expected;
-                    operator = "/";
+                    var rhs = randInt(10, 100);
+                    var lhs = rhs * expected;
+                    question.textContent = `${lhs} / ${rhs} = ?`;
                     break;
+                case 4:
+                    expected = randInt(1000, 10000);
+                    var sq = expected * expected;
+                    question.textContent = `√${sq} = ?`;
             }
-
-            var question = document.getElementById("question");
-            question.textContent = `${lhs} ${operator} ${rhs} = ?`;
 
             var submit = document.getElementById("submit");
             submit.onclick = () => {
