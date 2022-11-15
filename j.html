@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+
+<head>
+    <title>yes</title>
+    <script>
+        window.onload = () => {
+            var answer = document.getElementById("answer");
+            answer.textContent = 0;
+            var numbers = document.getElementsByClassName("number");
+            for (var number of numbers) {
+                const n = parseInt(number.textContent);
+                number.onclick = () => {
+                    if (answer.textContent === "0") {
+                        answer.textContent = n;
+                    } else {
+                        answer.textContent += n;
+                    }
+                }
+            }
+            var backspace = document.getElementById("backspace");
+            backspace.onclick = () => {
+                answer.textContent = answer.textContent.slice(0, -1);
+                if (answer.textContent === "") {
+                    answer.textContent = 0;
+                }
+            };
+
+            var randInt = (left, right) => {
+                return Math.floor(Math.random() * (right - left)) + left;
+            };
+            var operation = randInt(0, 4); // add, sub, mul, div
+            var expected = 0, lhs = 0, rhs = 0, operator = "";
+
+            switch (operation) {
+                case 0:
+                    expected = randInt(1000, 10000);
+                    lhs = randInt(100, expected - 100);
+                    rhs = expected - lhs;
+                    operator = "+";
+                    break;
+                case 1:
+                    expected = randInt(1000, 10000);
+                    rhs = randInt(100, 10000);
+                    lhs = expected + rhs;
+                    operator = "-"
+                    break;
+                case 2:
+                    lhs = randInt(100, 1000);
+                    rhs = randInt(Math.floor((1000 + lhs - 1) / lhs), Math.floor((10000 + lhs - 1) / lhs));
+                    expected = lhs * rhs;
+                    operator = "×"
+                    break;
+                case 3:
+                    expected = randInt(1000, 10000);
+                    rhs = randInt(10, 100);
+                    lhs = rhs * expected;
+                    operator = "/";
+                    break;
+            }
+
+            var question = document.getElementById("question");
+            question.textContent = `${lhs} ${operator} ${rhs} = ?`;
+
+            var submit = document.getElementById("submit");
+            submit.onclick = () => {
+                var ok = expected == parseInt(answer.textContent);
+                var result = document.getElementById("result");
+                result.textContent = ok ? "correct!" : "incorrect...";
+                result.style = ok ? "background-color:lightgreen" : "background-color:red";
+            };
+
+            var reload = document.getElementById("reload");
+            reload.onclick = () => {
+                window.location.reload();
+            };
+        };
+    </script>
+    <style>
+        * {
+            font-size: xx-large;
+        }
+
+        .number {
+            background-color: lightgray;
+        }
+
+        .number:hover {
+            background-color: aquamarine;
+        }
+
+        #backspace:hover {
+            background-color: aquamarine;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        Q. <span id="question" style="background-color:bisque"></span>
+    </div>
+    <div>
+        A. <span id="answer" style="background-color:yellow">0</span>
+    </div>
+    <div>
+        <div>
+            <span class="number">7</span>
+            <span class="number">8</span>
+            <span class="number">9</span>
+        </div>
+        <div>
+            <span class="number">4</span>
+            <span class="number">5</span>
+            <span class="number">6</span>
+        </div>
+        <div>
+            <span class="number">1</span>
+            <span class="number">2</span>
+            <span class="number">3</span>
+        </div>
+        <div>
+            <span class="number">0</span>
+            <span id="backspace" style="background-color:lightgray">BS</span>
+        </div>
+    </div>
+    <div>
+        <span id="submit" style="background-color:pink">submit</span>
+    </div>
+    <div>
+        <span id="result"></span>
+    </div>
+    <div>
+        <span id="reload" style="background-color:violet">reload</span>
+    </div>
+</body>
+
+</html>
