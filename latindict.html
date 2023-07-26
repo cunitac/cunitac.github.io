@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Wiktionary Latin Lookup</title>
+</head>
+
+<body>
+    <input type="text" id="wordInput" oninput="lookupLatinWord()">
+    <div id="resultArea"></div>
+
+    <script>
+        function lookupLatinWord() {
+            var inputWord = document.getElementById("wordInput").value;
+            var wiktionaryURL = "https://en.wiktionary.org/wiki/" + encodeURIComponent(inputWord) + "#Latin";
+            var resultArea = document.getElementById("resultArea");
+            resultArea.innerHTML = `<iframe src="${wiktionaryURL}" width="100%" height="600px"></iframe>`;
+        }
+    </script>
+</body>
+
+</html>
