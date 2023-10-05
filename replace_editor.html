@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>replace editor</title>
+    <style>
+        .textarea-container {
+            display: flex;
+            /* Flexbox コンテナを作成 */
+        }
+
+        .textarea {
+            margin: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            max-width: 80ch;
+            box-sizing: border-box;
+            resize: vertical;
+            font-family: "Noto Serif", "Open Sans", sans-serif;
+            font-feature-settings: "liga" 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="textarea-container">
+        <div class="textarea">
+            <textarea id="text" name="text" rows="22" cols="100" oninput="updateText()">ᾱ</textarea>
+        </div>
+        <div class="textarea">
+            <select id="templateDropdown" onchange="insertTemplate()">
+                <option value="">テンプレートを選択</option>
+                <option value="Latin">Latin</option>
+                <option value="Greek">Greek</option>
+            </select><br>
+            <textarea id="replace" name="replace" rows="20" cols="100" oninput="updateReplace()"></textarea>
+        </div>
+    </div>
+
+    <script>
+        var replacePairs = [];
+
+        var templates = {
+            "": "",
+            "Latin": "A/ Ā\na/ ā\nE/ Ē\ne/ ē\nI/ Ī\ni/ ī\nO/ Ō\no/ ō\nU/ Ū\nu/ ū",
+            "Greek": "\a ἀ\nha ἁ\n\A Ἀ\nhA Ἁ\nHA Ἁ\n\e ἐ\nhe ἑ\n\E Ἐ\nhE Ἑ\nHe Ἑ\nHE Ἑ\nἐ/ ἠ\nἑ/ ἡ\nἘ/ Ἠ\nἙ/ Ἡ\nHa Ἁ\na α\nA Α\nb β\nB Β\ng γ\nG Γ\nd δ\nD Δ\ne ε\nE Ε\nz ζ\nZ Ζ\nε/ η\nΕ/ Η\nτh θ\nΤh Θ\ni ι\nI Ι\nk κ\nK Κ\nl λ\nL Λ\nm μ\nM Μ\nn ν\nN Ν\nx ξ\nX Ξ\nκs ξ\nΚs Ξ\no ο\nO Ο\np π\nP Π\nr ρ\nR Ρ\ns σ\nS Σ\nt τ\nT Τ\ny υ\nY Υ\nπh φ\nΠh Φ\nκh χ\nΚh Χ\nπs ψ\nΠs Ψ\nο/ ω\nΟ/ Ω\nα/ ᾱ\nΑ/ Ᾱ\nι/ ῑ\nΙ/ Ῑ\nᾱι ᾳ\nηι ῃ\nωι ῳ\nu/ ῡ\nυ/ ῡ\nU/ Ῡ\nΥ/ Ῡ",
+            // 他のテンプレートも追加
+        };
+
+        function insertTemplate() {
+            var templateDropdown = document.getElementById("templateDropdown");
+            var selectedTemplate = templateDropdown.value;
+
+            var replaceArea = document.getElementById("replace");
+            replaceArea.value += templates[selectedTemplate];
+
+            updateReplace();
+        }
+
+        function updateReplace() {
+            var replaceArea = document.getElementById("replace");
+            var replaceText = replaceArea.value;
+
+            // 改行文字を使用してテキストを行ごとに分割
+            var lines = replaceText.split('\n');
+
+            // 空白を2列に区切り、各行を文字列の組（from, to）として保存
+            replacePairs = [];
+            for (var i = 0; i < lines.length; i++) {
+                var line = lines[i].trim().split(/\s+/); // 空白文字を区切りとして分割し、両端の空白を削除
+                if (line.length === 2) {
+                    replacePairs.push({ from: line[0], to: line[1] });
+                }
+            }
+
+            // 配列をコンソールに表示
+            console.log(replacePairs);
+
+            // 色付けした行を含むテキストをテキストエリアにセット
+            replaceArea.innerHTML = lines.join('\n');
+        }
+
+
+        function updateText() {
+            var textArea = document.getElementById("text");
+
+            // replacePairs 配列をループして置換を実行
+            for (var i = 0; i < replacePairs.length; i++) {
+                var from = replacePairs[i].from;
+                var to = replacePairs[i].to;
+
+                if (textArea.value.endsWith(from)) {
+                    textArea.value = textArea.value.slice(0, -from.length) + to;
+                    break;
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
