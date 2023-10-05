@@ -4,12 +4,14 @@
 <head>
     <title>replace editor</title>
     <style>
-        .textarea-container {
+        #textarea-container {
             display: flex;
+            width: 100%;
             /* Flexbox コンテナを作成 */
         }
 
         .textarea {
+            width: 100%;
             margin: 10px;
         }
 
@@ -25,7 +27,7 @@
 </head>
 
 <body>
-    <div class="textarea-container">
+    <div id="textarea-container">
         <div class="textarea">
             <textarea id="text" name="text" rows="22" cols="100" oninput="updateText()"></textarea>
         </div>
@@ -46,7 +48,6 @@
             "": "",
             "Latin": "A/ Ā\na/ ā\nE/ Ē\ne/ ē\nI/ Ī\ni/ ī\nO/ Ō\no/ ō\nU/ Ū\nu/ ū",
             "Greek": "\\a ἀ\nha ἁ\n\\A Ἀ\nhA Ἁ\nHa Ἁ\nHA Ἁ\n\\e ἐ\nhe ἑ\n\\E Ἐ\nhE Ἑ\nHe Ἑ\nHE Ἑ\nἐ/ ἠ\nἑ/ ἡ\nἘ/ Ἠ\nἙ/ Ἡ\n\\i ἰ\nhi ἱ\n\\I Ἰ\nHi Ἱ\nhI Ἱ\nHI Ἱ\n\\o ὀ\nho ὁ\n\\O Ὀ\nhO Ὁ\nHo Ὁ\nHO Ὁ\n\\u ὐ\nhu ὑ\nhU Ὑ\nHu Ὑ\nHU Ὑ\nὀ/ ὠ\nὁ/ ὡ\nὈ/ Ὠ\nὉ/ Ὡ\na α\nA Α\nb β\nB Β\ng γ\nG Γ\nd δ\nD Δ\ne ε\nE Ε\nz ζ\nZ Ζ\nε/ η\nΕ/ Η\nτh θ\nΤh Θ\ni ι\nI Ι\nk κ\nK Κ\nc κ\nC Κ\nl λ\nL Λ\nm μ\nM Μ\nn ν\nN Ν\nx ξ\nX Ξ\nκs ξ\nΚs Ξ\no ο\nO Ο\np π\nP Π\nr ρ\nR Ρ\ns σ\nS Σ\nσ/ ς\nt τ\nT Τ\ny υ\nY Υ\nπh φ\nΠh Φ\nκh χ\nΚh Χ\nπs ψ\nΠs Ψ\nο/ ω\nΟ/ Ω\nα/ ᾱ\nΑ/ Ᾱ\nι/ ῑ\nΙ/ Ῑ\nᾱι ᾳ\nηι ῃ\nωι ῳ\nu/ ῡ\nυ/ ῡ\nU/ Ῡ\nΥ/ Ῡ",
-            // 他のテンプレートも追加
         };
 
         function insertTemplate() {
@@ -97,6 +98,21 @@
                 }
             }
         }
+
+        // 画面幅に応じてレイアウトを切り替える
+        function adjustLayout() {
+            var container = document.getElementById("textarea-container");
+
+            if (window.innerWidth <= 80 * 10 * 1.5) { // 幅が80文字分の1.5倍以下の場合
+                container.style.display = "block";
+            } else {
+                container.style.display = "flex";
+            }
+        }
+
+        // 初期化時とウィンドウサイズ変更時にレイアウトを調整
+        window.onload = function () { adjustLayout(); };
+        window.onresize = function () { adjustLayout(); };
     </script>
 </body>
 
