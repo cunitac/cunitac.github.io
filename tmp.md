@@ -42,10 +42,10 @@
 
 童謡「ぞうさん」「やぎさんゆうびん」「一ねんせいになったら」などの作詞で知られる。
 
-[^1]: 木下牧子公式サイト [m-kinoshita.com](m-kinoshita.com) より抜粋
-[^2]: コール・クライネスWiki [chorkleines.com/member/wiki](chorkleines.com/member/wiki) より
-[^3]: NHKアーカイブ [nhk.or.jp/archives/articles/?id=D0009250389_00000](nhk.or.jp/archives/articles/?id=D0009250389_00000) より 至言
-[^4]: [x.com/KinoshitaMakiko/status/440259259498905601](x.com/KinoshitaMakiko/status/440259259498905601)
+[^1]: 木下牧子公式サイト [m-kinoshita.com](https://www.m-kinoshita.com) より抜粋
+[^2]: コール・クライネスWiki [chorkleines.com/member/wiki](https://www.chorkleines.com/member/wiki) より
+[^3]: NHKアーカイブ [nhk.or.jp/archives/articles/?id=D0009250389_00000](https://www.nhk.or.jp/archives/articles/?id=D0009250389_00000) より 至言
+[^4]: [x.com/KinoshitaMakiko/status/440259259498905601](https://x.com/KinoshitaMakiko/status/440259259498905601)
 [^5]: なお、掲載したポスト[^4]は大阪ハインリッヒ・シュッツ室内合唱団の演奏をまど・みちおの追悼のためアップロードした際のものである。当該演奏について木下牧子は「今まで聴いた「おんがく」の中ででもっとも美しい演奏」と評している[^6]。
-[^6]: [x.com/KinoshitaMakiko/status/439625515742142464](x.com/KinoshitaMakiko/status/439625515742142464)
+[^6]: [x.com/KinoshitaMakiko/status/439625515742142464](https://x.com/KinoshitaMakiko/status/439625515742142464)
 [^7]: 素直に読めば最終的には嗅覚・味覚・触覚のみになっているが、気にしないことにする。
