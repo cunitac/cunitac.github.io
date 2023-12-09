@@ -1,8 +1,9 @@
-# 木下牧子「おんがく」2024新歓曲 選曲資料
+# 木下牧子「おんがく」（2024新歓曲 選曲資料）
+
+> **みみをふさいで おんがくをながめていたい** （詩より抜粋）
 
 ## 「おんがく」
-曲 木下牧子  詞 まど・みちお
-> **みみをふさいで おんがくをながめていたい** （歌詞より抜粋）
+曲 木下牧子  詩 まど・みちお
 
 混声合唱曲集「うたよ！」（1995年）に収録。その後、女声合唱版・歌曲版も出版された。詩「おんがく」は2014年3月3日時点で木下牧子の「まど・みちお全詩集の中でもっとも好きな詩」である[^5]。
 <blockquote class="twitter-tweet"><p lang="ja" dir="ltr">「おんがく」は、まど・みちお全詩集の中でもっとも好きな詩です。大阪H.シュッツの素晴らしい演奏はCD「祝福」に収録されているもので、今回特別にアップしたのですが、関係者の皆さんのご厚意により、CD「祝福」のPVとしてこのままYouTubeチャンネルに置けることになりました。</p>&mdash; 木下牧子 (@KinoshitaMakiko) <a href="https://twitter.com/KinoshitaMakiko/status/440259259498905601?ref_src=twsrc%5Etfw">March 2, 2014</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
