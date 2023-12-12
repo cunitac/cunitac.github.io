@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Click to Add Red Dot</title>
+    <title>Text coordinate</title>
     <style>
         #canvas {
             display: block;
@@ -16,7 +16,10 @@
     <input type="file" id="imageInput" accept="image/*">
     <label for="scaleInput">scale</label>
     <input type="number" id="scaleInput" step="0.01" value="1.00">
+    <label for="zoomInput">zoom</label>
+    <input type="number" id="zoomInput" step="0.1" value="2.0">
     <canvas id="canvas"></canvas>
+    最初に打った点が原点です。ほぼ同じ点を打つと消えます。
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -26,6 +29,10 @@
             var ctx = canvas.getContext('2d');
             var dots = [];
             var scale = 1.00;
+            var zoom = 2.00;
+
+            var mouseX = 0;
+            var mouseY = 0;
 
             var img = new Image();
             img.onload = function () {
@@ -49,7 +56,13 @@
             scaleInput.addEventListener('change', function (event) {
                 scale = event.target.value;
                 draw();
-            })
+            });
+
+            var zoomInput = document.getElementById("zoomInput");
+            zoomInput.addEventListener('change', function (event) {
+                zoom = event.target.value;
+                draw();
+            });
 
             function drawRedDot(x, y) {
                 ctx.fillStyle = 'red';
@@ -57,12 +70,24 @@
                 ctx.arc(x, y, 5, 0, 2 * Math.PI);
                 ctx.fill();
 
-                ctx.fillStyle = 'black';
-                ctx.font = '12px Arial';
-
                 var cx = (x - dots[0][0]) * 1000 * scale / canvas.width;
                 var cy = (dots[0][1] - y) * 1000 * scale / canvas.width;
-                ctx.fillText(`(${Math.round(cx)}, ${Math.round(cy)})`, x + 10, y - 10);
+
+                ctx.font = '12px Arial';
+                var text = `${Math.round(cx)}, ${Math.round(cy)}`;
+
+                var textMetrics = ctx.measureText(text);
+                var textWidth = textMetrics.width;
+                var textLeft = textMetrics.actualBoundingBoxLeft
+                var textRight = textMetrics.actualBoundingBoxRight
+                var textDescent = textMetrics.actualBoundingBoxDescent;
+                var textAscent = textMetrics.actualBoundingBoxAscent;
+
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+                ctx.fillRect(x + 10 - textLeft, y + 10 - textAscent, textLeft + textRight, textDescent + textAscent);
+
+                ctx.fillStyle = 'black';
+                ctx.fillText(text, x + 10, y + 10);
             }
 
             function draw() {
@@ -70,17 +95,24 @@
                 for (dot of dots) {
                     drawRedDot(dot[0], dot[1]);
                 }
+
+                w = 50
+                ctx.drawImage(canvas, mouseX - w / zoom, mouseY - w / zoom, 2 * w / zoom, 2 * w / zoom, mouseX - w, mouseY - w, 2 * w, 2 * w);
             }
 
+            canvas.addEventListener('mousemove', function (event) {
+                mouseX = event.clientX - canvas.getBoundingClientRect().left;
+                mouseY = event.clientY - canvas.getBoundingClientRect().top;
+
+                draw();
+            });
+
             canvas.addEventListener('click', function (event) {
-                var rect = canvas.getBoundingClientRect();
-                var clickX = event.clientX - rect.left;
-                var clickY = event.clientY - rect.top;
-                var p = [clickX, clickY];
+                var p = [mouseX, mouseY];
 
                 var i = dots.findIndex(q => (p[0] - q[0]) ** 2 + (p[1] - q[1]) ** 2 < 10);
                 if (i == -1) {
-                    dots.push([clickX, clickY]);
+                    dots.push(p);
                 } else {
                     dots.splice(i, 1);
                 }
