@@ -70,7 +70,9 @@
                 ctx.beginPath();
                 ctx.arc(x, y, 5, 0, 2 * Math.PI);
                 ctx.fill();
-
+                drawCoord(x, y);
+            }
+            function drawCoord(x, y) {
                 var cx = (x - dots[0][0]) * 1000 * scale / canvas.width;
                 var cy = (dots[0][1] - y) * 1000 * scale / canvas.width;
 
@@ -99,6 +101,8 @@
 
                 w = 50
                 ctx.drawImage(canvas, mouseX - w / zoom, mouseY - w / zoom, 2 * w / zoom, 2 * w / zoom, mouseX - w, mouseY - w, 2 * w, 2 * w);
+
+                drawCoord(mouseX, mouseY);
             }
 
             canvas.addEventListener('mousemove', function (event) {
