@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click to Add Red Dot</title>
+    <style>
+        #canvas {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="file" id="imageInput" accept="image/*">
+    <label for="scaleInput">scale</label>
+    <input type="number" id="scaleInput" step="0.01" value="1.00">
+    <canvas id="canvas"></canvas>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var canvas = document.getElementById('canvas');
+            canvas.width = window.innerWidth;
+
+            var ctx = canvas.getContext('2d');
+            var dots = [];
+            var scale = 1.00;
+
+            var img = new Image();
+            img.onload = function () {
+                canvas.height = img.height * window.innerWidth / img.width;
+                draw();
+            };
+
+            var imageInput = document.getElementById('imageInput');
+            imageInput.addEventListener('change', function (event) {
+                var file = event.target.files[0];
+                if (file) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        img.src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            var scaleInput = document.getElementById("scaleInput");
+            scaleInput.addEventListener('change', function (event) {
+                scale = event.target.value;
+                draw();
+            })
+
+            function drawRedDot(x, y) {
+                ctx.fillStyle = 'red';
+                ctx.beginPath();
+                ctx.arc(x, y, 5, 0, 2 * Math.PI);
+                ctx.fill();
+
+                ctx.fillStyle = 'black';
+                ctx.font = '12px Arial';
+
+                var cx = (x - dots[0][0]) * 1000 * scale / canvas.width;
+                var cy = (dots[0][1] - y) * 1000 * scale / canvas.width;
+                ctx.fillText(`(${Math.round(cx)}, ${Math.round(cy)})`, x + 10, y - 10);
+            }
+
+            function draw() {
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                for (dot of dots) {
+                    drawRedDot(dot[0], dot[1]);
+                }
+            }
+
+            canvas.addEventListener('click', function (event) {
+                var rect = canvas.getBoundingClientRect();
+                var clickX = event.clientX - rect.left;
+                var clickY = event.clientY - rect.top;
+                var p = [clickX, clickY];
+
+                var i = dots.findIndex(q => (p[0] - q[0]) ** 2 + (p[1] - q[1]) ** 2 < 10);
+                if (i == -1) {
+                    dots.push([clickX, clickY]);
+                } else {
+                    dots.splice(i, 1);
+                }
+
+                draw();
+            });
+
+            window.addEventListener('resize', function (event) {
+                var ratio = window.innerWidth / canvas.width;
+                for (dot of dots) {
+                    dot[0] *= ratio;
+                    dot[1] *= ratio;
+                }
+
+                canvas.width = window.innerWidth;
+                canvas.height = img.height * window.innerWidth / img.width;
+
+                draw();
+            })
+
+            draw();
+        });
+    </script>
+</body>
+
+</html>
